@@ -1,0 +1,127 @@
+-- Maxim Tikhonov 800783503
+
+PRAGMA foreign_keys = ON;
+
+CREATE TABLE User (
+    user_id INTEGER PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    role VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE Tool_Category (
+    category_id INTEGER PRIMARY KEY,
+    category_name VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE Config_File (
+    file_id INTEGER PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    hash VARCHAR(100) NOT NULL,
+    user_id INTEGER NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES User(user_id)
+        ON DELETE CASCADE
+);
+
+CREATE TABLE Environment (
+    env_id INTEGER PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    is_active BOOLEAN NOT NULL DEFAULT 0,
+    file_id INTEGER,
+    FOREIGN KEY (file_id) REFERENCES Config_File(file_id)
+        ON DELETE SET NULL
+);
+
+CREATE TABLE Source_Ctrl (
+    tool_id INTEGER PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    type VARCHAR(100) NOT NULL,
+    version VARCHAR(50) NOT NULL,
+    category_id INTEGER NOT NULL,
+    FOREIGN KEY (category_id) REFERENCES Tool_Category(category_id)
+        ON DELETE CASCADE
+);
+
+CREATE TABLE Testing (
+    tool_id INTEGER PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    type VARCHAR(100) NOT NULL,
+    version VARCHAR(50) NOT NULL,
+    category_id INTEGER NOT NULL,
+    FOREIGN KEY (category_id) REFERENCES Tool_Category(category_id)
+        ON DELETE CASCADE
+);
+
+CREATE TABLE Service (
+    service_id INTEGER PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    is_active BOOLEAN NOT NULL DEFAULT 0
+);
+
+CREATE TABLE Pipeline (
+    pipe_id INTEGER PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    service_id INTEGER NOT NULL,
+    FOREIGN KEY (service_id) REFERENCES Service(service_id)
+        ON DELETE CASCADE
+);
+
+CREATE TABLE Pipeline_Step (
+    pipe_id INTEGER NOT NULL,
+    step_id INTEGER NOT NULL,
+    name VARCHAR(100) NOT NULL,
+    PRIMARY KEY (pipe_id, step_id),
+    FOREIGN KEY (pipe_id) REFERENCES Pipeline(pipe_id)
+        ON DELETE CASCADE
+);
+
+CREATE TABLE Deployment (
+    deploy_id INTEGER PRIMARY KEY,
+    status VARCHAR(100) NOT NULL,
+    version VARCHAR(50) NOT NULL,
+    timestamp TEXT NOT NULL,
+    user_id INTEGER NOT NULL,
+    env_id INTEGER NOT NULL,
+    service_id INTEGER NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES User(user_id)
+        ON DELETE CASCADE,
+    FOREIGN KEY (env_id) REFERENCES Environment(env_id)
+        ON DELETE CASCADE,
+    FOREIGN KEY (service_id) REFERENCES Service(service_id)
+        ON DELETE CASCADE
+);
+
+CREATE TABLE Log (
+    log_id INTEGER PRIMARY KEY,
+    type VARCHAR(100) NOT NULL,
+    timestamp TEXT NOT NULL,
+    deploy_id INTEGER NOT NULL,
+    FOREIGN KEY (deploy_id) REFERENCES Deployment(deploy_id)
+        ON DELETE CASCADE
+);
+
+CREATE TABLE Uses (
+    user_id INTEGER NOT NULL,
+    category_id INTEGER NOT NULL,
+    env_id INTEGER NOT NULL,
+    PRIMARY KEY (user_id, category_id, env_id),
+    FOREIGN KEY (user_id) REFERENCES User(user_id)
+        ON DELETE CASCADE,
+    FOREIGN KEY (category_id) REFERENCES Tool_Category(category_id)
+        ON DELETE CASCADE,
+    FOREIGN KEY (env_id) REFERENCES Environment(env_id)
+        ON DELETE CASCADE
+);
+
+CREATE TABLE Accesses (
+    user_id INTEGER NOT NULL,
+    service_id INTEGER NOT NULL,
+    permissions VARCHAR(100) NOT NULL,
+    PRIMARY KEY (user_id, service_id),
+    FOREIGN KEY (user_id) REFERENCES User(user_id)
+        ON DELETE CASCADE,
+    FOREIGN KEY (service_id) REFERENCES Service(service_id)
+        ON DELETE CASCADE
+);
+
+

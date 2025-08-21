@@ -1,0 +1,80 @@
+-- Maxim Tikhonov 800783503
+
+-- Results from running 'SELECT * FROM table_name' on each table
+
+1|John Smith|john.smith@company.com|Developer
+2|Sarah Johnson|sarah.johnson@company.com|DevOps Engineer
+3|Mike Chen|mike.chen@company.com|Team Lead
+4|Emily Davis|emily.davis@company.com|QA Engineer
+5|Alex Rodriguez|alex.rodriguez@company.com|System Administrator
+
+1|docker-compose.yml|a1b2c3d4e5f6789012345|1
+2|pipeline-config.json|b2c3d4e5f6789012345a1|2
+3|test-suite.xml|c3d4e5f6789012345a1b2|3
+4|deployment.yaml|d4e5f6789012345a1b2c3|4
+5|monitoring.conf|e5f6789012345a1b2c3d4|5
+
+1|Development|1|1
+2|Testing|1|2
+3|Staging|1|3
+4|Production|1|4
+5|UAT|0|5
+
+1|Git|Distributed VCS|2.40.1|1
+2|GitHub|Cloud Repository|Enterprise|1
+3|GitLab|DevOps Platform|16.2.4|1
+4|Bitbucket|Git Repository|8.12.0|1
+5|Mercurial|Distributed VCS|6.4.2|1
+
+1|Jest|Unit Testing|29.5.0|2
+2|Selenium|UI Testing|4.10.0|2
+3|JUnit|Unit Testing|5.9.3|2
+4|Cypress|E2E Testing|12.17.1|2
+5|Postman|API Testing|10.15.1|2
+
+1|User Authentication API|1
+2|Payment Processing Service|1
+3|Notification Service|1
+4|Data Analytics Engine|0
+5|File Storage Service|1
+
+1|Build and Test Pipeline|1
+2|Security Scan Pipeline|2
+3|Performance Test Pipeline|3
+4|Deployment Pipeline|4
+5|Monitoring Setup Pipeline|5
+
+1|1|Code Checkout
+1|2|Unit Tests
+1|3|Build Application
+2|1|Static Code Analysis
+2|2|Dependency Scan
+3|1|Load Test Setup
+3|2|Execute Performance Tests
+4|1|Environment Preparation
+4|2|Application Deployment
+5|1|Configure Monitoring
+
+1|Success|1.2.3|2025-07-27 09:15:30|1|1|1
+2|Failed|2.1.0|2025-07-27 10:30:45|2|2|2
+3|In Progress|1.5.7|2025-07-27 11:45:12|3|3|3
+4|Success|3.0.1|2025-07-27 14:20:18|4|4|4
+5|Rollback|2.8.4|2025-07-27 16:35:22|5|1|5
+
+1|INFO|2025-07-27 09:15:35|1
+2|ERROR|2025-07-27 10:31:02|2
+3|WARN|2025-07-27 11:45:28|3
+4|INFO|2025-07-27 14:20:25|4
+5|ERROR|2025-07-27 16:35:45|5
+
+1|1|1
+2|2|2
+3|3|3
+4|4|4
+5|5|1
+
+1|1|Read, Write
+2|2|Read, Write, Deploy
+3|3|Admin
+4|4|Read, Execute
+5|5|Admin
